@@ -1,0 +1,26 @@
+{% extends "bases/base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<link href="{% static 'servicos/css/css.css' %}" rel="stylesheet">
+{% endblock 'head' %}
+
+{% block 'conteudo' %}
+<div class="container">
+    <br>
+    <h3 class="font-destaque-secundaria"> <img width="10%" src="{% static 'geral/img/logo1.png' %}" alt="">
+        CleanSepticPro
+    </h3>
+
+    {% if messages %}
+    <br>
+    {% for message in messages %}
+    <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+
+    <div>
+        <h3>Listagem de Serviços Solicitados pelo Cliente: {{ request.user.nome }}</h3>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+body{
+
+    background-image: url('/static/geral/img/bg1.png');
+    background-size: cover;
+
+}
+
+p{
+    color: var(--light-color);
+}
+
+.btn-custom {
+    background-color: #FF0000;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px; 
+    border-radius: 5px; 
+}
+
+.btn-custom:hover {
+    background-color: #FF3333;
+}
