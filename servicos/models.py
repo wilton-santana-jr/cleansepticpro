@@ -54,8 +54,16 @@ class SolicitacaoServico(models.Model):
     criado_em = models.DateTimeField(auto_now_add=True)
     data_limpeza = models.DateTimeField(null=True, blank=True)
 
+
     def __str__(self):
         return f'{self.cliente} | {self.servico.nome} | {self.criado_em.strftime("%d/%m/%Y %Hh:%M:%S")}'
+    
+    def save(self, *args, **kwargs):
+        if self.dar_desconto:
+            self.valor_pago = self.servico.preco - self.valor_desconto
+        else:
+            self.valor_pago = self.servico.preco
+        super().save(*args, **kwargs)
 
     def badge_template(self):
         status_mapping = {

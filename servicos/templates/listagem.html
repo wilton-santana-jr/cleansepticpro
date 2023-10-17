@@ -21,6 +21,44 @@
 
     <div>
         <h3>Listagem de Serviços Solicitados pelo Cliente: {{ request.user.nome }}</h3>
+        {% if not servicos %}
+            <h4>Nenhum Serviço Solicitado</h2>
+        {% else %}
+        <table class="table">
+            <thead>
+                <tr class="table-dark">
+                    <th scope="col">Serviço</th>
+                    <th scope="col">Atendente</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Forma de Pagamento</th>
+                    <th scope="col">Criado em</th>
+                    <th scope="col">Data de Limpeza</th>
+                    <th scope="col">Tem desconto?</th>
+                    <th scope="col">Valor Pago</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for servico in servicos %}
+                <tr class="table-dark">
+                    <td>{{ servico.servico }}</td>
+                    <td>{{ servico.atendente }}</td>
+                    <td>{{ servico.get_status_display }}</td>
+                    <td>{{ servico.get_forma_pagamento_display }}</td>
+                    <td>{{ servico.criado_em }}</td>
+                    <td>{{ servico.data_limpeza }}</td>
+                    <td>
+                        {% if servico.valor_desconto is null %}
+                            x
+                        {% else %}
+                            R$ {{ servico.valor_desconto }}
+                        {% endif %}
+                    </td>
+                    <td>R$ {{ servico.valor_pago }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

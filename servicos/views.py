@@ -11,12 +11,16 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from servicos.decorators import cliente_required, gerente_required, atendente_required
 
+from .models import SolicitacaoServico
+
 
 @login_required  # Requer que o usuário esteja autenticado
 @cliente_required
 def listagem(request):
     if request.method == "GET":
-        return render(request, 'listagem.html')
+
+        solicitacoes_servicos = SolicitacaoServico.objects.filter(cliente=request.user)
+        return render(request, 'listagem.html', {'servicos': solicitacoes_servicos})
 
 
 @login_required
