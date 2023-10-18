@@ -19,31 +19,47 @@
     {% endfor %}
     {% endif %}
 
-    <div>
-        <h3>Cadastrar novo serviço</h3>
+    <div class="row">
+        <h3 class="font-destaque">Solicitar Serviço de Limpeza</h3>
 
         <div class="row">
             <div class="col-md-9">
-            
-                <form action="{% url 'cadastro-servico' %}" method="POST"> 
+
+                <form action="{% url 'cadastro-servico' %}" method="POST">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label class="form-label">Tipo Serviço</label>
-                        <select class="form-select" name="tipo_servico" id="tipo_servico">
-                            <option class="bg-dark" value="limpeza_simples">Limpeza Simples</option>
-                            <option class="bg-dark" value="limpeza_profunda">Limpeza Profunda</option>
+                        <label class="form-label">Selecione o serviço</label><br>
+                        <select class="input-default" name="servicos">
+                            {% for tipo_servico in tipos_servicos %}
+                            <option class="opt2" value="{{ tipo_servico.id }}">{{ tipo_servico.desc }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Data e Hora</label>
-                        <input type="datetime-local" class="form-control" name="data_limpeza">
+                        <label class="form-label">Selecione a forma de pagamento</label><br>
+                        <select class="input-default" name="forma_pagamento">
+                            {% for key, value in choice_forma_pagamento %}
+                            <option class="opt2" value="{{ key }}">
+                                {{ value }}
+                            </option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Endereço</label>
-                        <textarea class="form-control" name="endereco" id="endereco"></textarea>
+                        <label class="form-label">Data e Hora de realização da Limpeza</label><br>
+                        <input type="datetime-local" class="input-default" name="data_limpeza">
                     </div>
-                    <input type="submit" value="Cadastrar" class="btn-default">
-                </form>        
+                    <div class="mb-3">
+                        <label class="form-label">Endereço onde a limpeza será realizada</label><br>
+                        <textarea class="input-default" name="endereco" id="endereco"></textarea>
+                    </div>
+                    <br>
+                    <input type="submit" value="Solicitar" class="btn-default tamanho-2">
+                </form>
+                <br>
+                <br>
+                <a href="{% url 'listagem' %}" class="btn-custom">Ir para a página de Serviços Solicitados</a>
+                <br>
             </div>
         </div>
     </div>

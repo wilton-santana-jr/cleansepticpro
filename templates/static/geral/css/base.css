@@ -37,7 +37,29 @@
     border-radius: 10px;
 }
 
+.btn-default-link{
+    background-color: var(--light-color);
+    color: black;
+    width: 15%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
 .font-destaque-secundaria{
     color: var(--light-color);
     font-size: 35px;
+}
+
+
+
+.custom-table {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--differential-color);
+    color: white; 
+}
+  
+.custom-table th, .custom-table td {
+    border: 1px solid var(--differential-color);
 }

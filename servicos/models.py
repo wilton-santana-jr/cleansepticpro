@@ -25,6 +25,9 @@ class TiposServicos(models.Model):
     def __str__(self):
         return self.nome
 
+    def desc(self):
+        return f'{self.nome} (R$ {self.preco:.2f})'
+
 
 class SolicitacaoServico(models.Model):
     choice_status = (
@@ -54,10 +57,9 @@ class SolicitacaoServico(models.Model):
     criado_em = models.DateTimeField(auto_now_add=True)
     data_limpeza = models.DateTimeField(null=True, blank=True)
 
-
     def __str__(self):
         return f'{self.cliente} | {self.servico.nome} | {self.criado_em.strftime("%d/%m/%Y %Hh:%M:%S")}'
-    
+
     def save(self, *args, **kwargs):
         if self.dar_desconto:
             self.valor_pago = self.servico.preco - self.valor_desconto

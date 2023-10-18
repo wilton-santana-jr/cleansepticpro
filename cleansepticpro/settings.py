@@ -85,6 +85,8 @@ DATABASES = {
 }
 
 
+LOGIN_URL = '/acessos/login/'
+
 AUTH_USER_MODEL = 'acessos.CustomUser'
 
 AUTHENTICATION_BACKENDS = [

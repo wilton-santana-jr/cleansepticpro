@@ -19,14 +19,17 @@
     {% endfor %}
     {% endif %}
 
-    <div>
-        <h3>Listagem de Serviços Solicitados pelo Cliente: {{ request.user.nome }}</h3>
+    <div class="row">
+        <h3 class="font-destaque">Listagem de Serviços Solicitados <br>Cliente: {{ request.user.nome }}</h3>
+
         {% if not servicos %}
-            <h4>Nenhum Serviço Solicitado</h2>
+        <br>
+        <h4 class="font-destaque">Nenhum Serviço Solicitado</h4>
+        <br>
         {% else %}
         <table class="table">
             <thead>
-                <tr class="table table-dark table-hover">
+                <tr class="table table-hover table-dark custom-table">
                     <th scope="col">Serviço</th>
                     <th scope="col">Atendente</th>
                     <th scope="col">Status</th>
@@ -39,18 +42,18 @@
             </thead>
             <tbody>
                 {% for servico in servicos %}
-                <tr class="table-dark">
+                <tr class="table-hover table-dark custom-table">
                     <td>{{ servico.servico }}</td>
                     <td>{{ servico.atendente }}</td>
-                    <td>{{ servico.get_status_display }}</td>
+                    <td>{{ servico.badge_template }}</td>
                     <td>{{ servico.get_forma_pagamento_display }}</td>
                     <td>{{ servico.criado_em }}</td>
                     <td>{{ servico.data_limpeza }}</td>
-                    <td>
+                    <td align="center">
                         {% if servico.valor_desconto is null %}
-                            x
+                        Não
                         {% else %}
-                            R$ {{ servico.valor_desconto }}
+                        R$ {{ servico.valor_desconto }}
                         {% endif %}
                     </td>
                     <td>R$ {{ servico.valor_pago }}</td>
@@ -60,7 +63,7 @@
         </table>
         {% endif %}
         <div class="my-4">
-            <a href="{% url 'cadastro-servico' %} " class="btn-custom">Novo Serviço</a>
+            <a href="{% url 'cadastro-servico' %} " class="btn-default-link">Novo Serviço</a>
         </div>
     </div>
 </div>
