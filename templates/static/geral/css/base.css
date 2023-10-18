@@ -63,3 +63,14 @@
 .custom-table th, .custom-table td {
     border: 1px solid var(--differential-color);
 }
+
+.btn-default-link2{
+    
+    background-color: var(--light-color);
+    color: black;
+
+    padding: 2px;
+    border: none;
+    border-radius: 2px;
+    text-decoration: none;
+}

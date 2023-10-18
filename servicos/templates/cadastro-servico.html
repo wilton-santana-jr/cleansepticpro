@@ -49,10 +49,42 @@
                         <label class="form-label">Data e Hora de realização da Limpeza</label><br>
                         <input type="datetime-local" class="input-default" name="data_limpeza">
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label">Endereço onde a limpeza será realizada</label><br>
-                        <textarea class="input-default" name="endereco" id="endereco"></textarea>
+                        <select class="input-default" name="endereco_option" id="endereco_option">
+                            <option class="opt2" value="proprio">Próprio Endereço do Cliente</option>
+                            <option class="opt2" value="outro">Outro Endereço</option>
+                        </select><br><br>
+                        <textarea class="input-default" name="endereco" id="endereco_textarea"
+                            style="display: none;"></textarea>
                     </div>
+
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+                    <script>
+                        $(document).ready(function () {
+                            $("#endereco_option").change(function () {
+                                var selectedOption = $(this).val();
+
+                                if (selectedOption === "outro") {
+                                    $("#endereco_textarea").show();
+                                } else {
+                                    $("#endereco_textarea").hide();
+                                }
+                            });
+
+
+
+                        });
+
+                    </script>
+
+
+
+
+
+
                     <br>
                     <input type="submit" value="Solicitar" class="btn-default tamanho-2">
                 </form>

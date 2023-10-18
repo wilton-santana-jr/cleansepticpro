@@ -25,6 +25,9 @@ class TiposServicos(models.Model):
     def __str__(self):
         return self.nome
 
+    def preco_formatado(self):
+        return f'R$ {self.preco:.2f}'
+
     def desc(self):
         return f'{self.nome} (R$ {self.preco:.2f})'
 
@@ -56,6 +59,7 @@ class SolicitacaoServico(models.Model):
     valor_pago = models.FloatField(null=True, blank=True)
     criado_em = models.DateTimeField(auto_now_add=True)
     data_limpeza = models.DateTimeField(null=True, blank=True)
+    endereco = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.cliente} | {self.servico.nome} | {self.criado_em.strftime("%d/%m/%Y %Hh:%M:%S")}'
@@ -66,6 +70,12 @@ class SolicitacaoServico(models.Model):
         else:
             self.valor_pago = self.servico.preco
         super().save(*args, **kwargs)
+
+    def valor_pago_formatado(self):
+        return f'R$ {self.valor_pago:.2f}'
+
+    def valor_desconto_formatado(self):
+        return f'R$ {self.valor_desconto:.2f}'
 
     def badge_template(self):
         status_mapping = {

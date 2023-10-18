@@ -40,8 +40,12 @@ def cadastro_servico(request):
         # tipo_servico_id = request.POST.getlist('servicos') # retorna uma lista de ids quando o select é multiple
         # retorna somente um id quando o select não é multiple
         tipo_servico_id = request.POST.get('servicos')
-        endereco = request.POST.get('endereco')
         forma_pagamento = request.POST.get('forma_pagamento')
+
+        endereco_option = request.POST.get('endereco_option')
+        endereco = request.POST.get('endereco')
+
+        print(endereco)
 
         if not tipo_servico_id:
             messages.add_message(request, constants.ERROR,
@@ -57,9 +61,11 @@ def cadastro_servico(request):
                                  'Selecione data e hora da limpeza')
             return redirect('/servicos/cadastro-servico')
 
-        if not endereco:
-            messages.add_message(request, constants.ERROR,
-                                 'Selecione o endereço onde será realizado o serviço')
+        if endereco_option == "proprio":
+            endereco = request.user.endereco
+        elif endereco_option == "outro" and not endereco:
+            messages.add_message(
+                request, constants.ERROR, 'Selecione o endereço onde será realizado o serviço')
             return redirect('/servicos/cadastro-servico')
 
         if forma_pagamento not in [choice[0] for choice in SolicitacaoServico.choice_forma_pagamento]:
@@ -74,6 +80,7 @@ def cadastro_servico(request):
                 cliente=request.user,
                 forma_pagamento=forma_pagamento,
                 status='S',
+                endereco=endereco,
             )
 
             messages.add_message(request, constants.SUCCESS,
