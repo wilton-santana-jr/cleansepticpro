@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block 'head' %}
-<link href="{% static 'servicos/css/css.css' %}" rel="stylesheet">
+<link href="{% static 'administrativos/css/css.css' %}" rel="stylesheet">
 {% endblock 'head' %}
 
 {% block 'conteudo' %}
@@ -20,43 +20,45 @@
     {% endif %}
 
     <div class="row">
-        <h3 class="font-destaque">Listagem de Serviços Solicitados <br>Cliente: {{ request.user.nome }}</h3>
+        <h4 class="font-destaque">Listagem de Atendentes <br>Gerente Logado: {{ request.user.nome }}</h4>
 
         <div class="my-4">
-            <a href="{% url 'cadastro-servico' %} " class="btn-default-link">Novo Serviço</a>
+            <a href="{% url 'cadastra-atendente' %}" class="btn-default-link">Novo Atendente</a>
         </div>
-        {% if not servicos %}
+        {% if not atendentes %}
         <br>
-        <h4 class="font-destaque">Nenhum Serviço Solicitado</h4>
+        <h4 class="font-destaque">Nenhum Atendente Cadastrado</h4>
         <br>
         {% else %}
         <table class="table">
             <thead>
                 <tr class="table table-hover table-dark custom-table">
-                    <th scope="col">Serviço</th>
 
 
 
+
+                    <th scope="col">Atendente</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Fone</th>
                     <th scope="col">Endereço</th>
-                    <th scope="col">Solicitado em</th>
-                    <th scope="col">Data de Limpeza</th>
                     <th scope="col">Status</th>
+
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                {% for servico in servicos %}
+                {% for atendente in atendentes %}
                 <tr class="table-hover table-dark custom-table">
-                    <td>{{ servico.servico }}</td>
-                    <td>{% if servico.endereco %}
-                        Endereço: {{ servico.endereco}}<br>
+                    <td>{{ atendente.nome }}</td>
+                    <td>{{ atendente.email }}</td>
+                    <td>{{ atendente.telefone }}</td>
+                    <td>{{ atendente.endereco }}</td>
+                    <td>{% if atendente.is_active %}
+                        <span class='badge bg-info text-white'>Ativado</span>
                         {% else %}
-                        Endereço: {{ servico.cliente.endereco }}<br>
-                        {% endif %}</td>
-                    <td>{{ servico.criado_em }}</td>
-                    <td>{{ servico.data_limpeza }}</td>
-
-                    <td>{{ servico.badge_template }}</td>
+                        <span class='badge bg-danger text-white'>Desativado</span>
+                        {% endif %}
+                    </td>
                     <td align="center">
                         <!-- Botão "Ver Detalhes" -->
                         <button class="btn-default-link2  ver-detalhes">Ver Detalhes</button>
@@ -65,34 +67,15 @@
                 <tr class="detalhes table-hover table-dark custom-table">
 
                     <!-- Seção de detalhes oculta -->
-                    <td colspan="8">
-                        Atendente:
-                        {% if servico.atendente %}
-                        {{ servico.atendente }}<br>
-                        {% else %}
-                        Sem Atendente até o momento. <br>
-                        {% endif %}
+                    <td colspan="6">
 
-                        {% if servico.endereco %}
-                        Endereço: {{ servico.endereco}}<br>
-                        {% else %}
-                        Endereço: {{ servico.cliente.endereco }}<br>
-                        {% endif %}
-
-
-
-
-
-                        Forma de Pagamento: {{ servico.get_forma_pagamento_display }}<br>
-
-                        Valor Serviço..: {{ servico.servico.preco_formatado }}<br>
-                        {% if servico.valor_desconto is not null %}
-                        Desconto: {{ servico.valor_desconto_formatado }}<br>
-                        {% else %}
-                        Desconto.......: R$ 0.00<br>
-                        {% endif %}
-                        Valor Total.....: {{ servico.valor_pago_formatado }}<br>
-
+                        <h1>Detalhes do Atendente</h1>
+                        <p>Nome: {{ atendente.nome }}</p>
+                        <p>Telefone: {{ atendente.telefone }}</p>
+                        <p>Endereço: R$ {{ atendente.endereco }}</p>
+                        <a href="{% url 'edita-atendente' atendente.id %}">Editar</a>
+                        <a href="{% url 'inativa-atendente' atendente.id %}">Inativar</a>
+                        <a href="{% url 'lista-atendentes' %}">Voltar para a lista de atendentes</a>
 
                     </td>
 

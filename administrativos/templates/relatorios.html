@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block 'head' %}
-<link href="{% static 'servicos/css/css.css' %}" rel="stylesheet">
+<link href="{% static 'administrativos/css/css.css' %}" rel="stylesheet">
 {% endblock 'head' %}
 
 {% block 'conteudo' %}
@@ -19,8 +19,22 @@
     {% endfor %}
     {% endif %}
 
-    <div>
-        <h4>Listagem de Atendimentos às Solicitações dos Clientes. Atendente Logado: {{ request.user.nome }}</h4>
+    <div class="row">
+        <h3 class="font-destaque">
+            Relatórios Gerenciais dos Atendimentos às Solicitações dos Clientes.
+            <br> Gerente Logado: {{ request.user.nome }}
+        </h3>
+
+        <br>
+
+        <div class="my-4">
+            <a href="{% url 'lista-atendentes' %} " class="btn-default-link">Listagem de Atendentes</a>
+        </div>
+
+
+
+
+
     </div>
 </div>
 {% endblock %}

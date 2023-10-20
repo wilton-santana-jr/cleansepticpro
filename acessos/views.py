@@ -110,9 +110,9 @@ def logar(request):
             # view de listagem de serviços
             return redirect('/servicos/listagem')
         elif user.groups.filter(name='atendentes').exists():
-            return redirect('/servicos/atendimentos')
+            return redirect('/administrativos/atendimentos')
         elif user.groups.filter(name='gerentes').exists():
-            return redirect('/servicos/relatorios')
+            return redirect('/administrativos/relatorios')
         else:
             return redirect('/acessos/login')
 

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block 'head' %}
-<link href="{% static 'servicos/css/css.css' %}" rel="stylesheet">
+<link href="{% static 'administrativos/css/css.css' %}" rel="stylesheet">
 {% endblock 'head' %}
 
 {% block 'conteudo' %}
@@ -20,8 +20,7 @@
     {% endif %}
 
     <div>
-        <h4>Relatórios Gerenciais dos Atendimentos às Solicitações dos Clientes. Gerente Logado: {{ request.user.nome }}
-        </h4>
+        <h4>Listagem de Atendimentos às Solicitações dos Clientes. Atendente Logado: {{ request.user.nome }}</h4>
     </div>
 </div>
 {% endblock %}

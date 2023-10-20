@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Atendente</title>
+</head>
+
+<body>
+    <h1>Cadastrar Atendente</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Cadastrar Atendente">
+    </form>
+    <a href="{% url 'lista-atendentes' %}">Voltar para a lista de atendentes</a>
+</body>
+
+</html>

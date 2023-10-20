@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 
 from django.contrib.auth.decorators import login_required
-from servicos.decorators import cliente_required, gerente_required, atendente_required
+from servicos.decorators import cliente_required
 
 from .models import SolicitacaoServico, TiposServicos
 
@@ -29,7 +29,7 @@ def listagem(request):
 def cadastro_servico(request):
     if request.method == "GET":
 
-        tipos_servicos = TiposServicos.objects.all()
+        tipos_servicos = TiposServicos.objects.filter(disponivel=True)
         choice_forma_pagamento = SolicitacaoServico.choice_forma_pagamento
         # faltou passar o tipo de servico aqui para carregar o select dinamicamente
         return render(request, 'cadastro-servico.html', {'tipos_servicos': tipos_servicos,
@@ -74,6 +74,12 @@ def cadastro_servico(request):
             return redirect('/servicos/cadastro-servico')
 
         try:
+
+            if not tipo_servico.disponivel:
+                messages.add_message(
+                    request, constants.ERROR, 'Selecione o tipo do serviço')
+                return redirect('/servicos/cadastro-servico')
+
             solicitacao_servico = SolicitacaoServico.objects.create(
                 servico=tipo_servico,
                 data_limpeza=data_limpeza,
@@ -91,17 +97,3 @@ def cadastro_servico(request):
             return redirect('/servicos/cadastro-servico')
 
         return redirect('/servicos/listagem/')
-
-
-@login_required
-@gerente_required
-def relatorios(request):
-    if request.method == "GET":
-        return render(request, 'relatorios.html')
-
-
-@login_required
-@atendente_required
-def atendimentos(request):
-    if request.method == "GET":
-        return render(request, 'atendimentos.html')

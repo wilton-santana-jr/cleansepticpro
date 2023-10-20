@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Inativar Atendente</title>
+</head>
+
+<body>
+    <h1>Inativar Atendente</h1>
+    <p>Tem certeza de que deseja inativar o atendente "{{ atendente.nome }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Confirmar Inativação do atendente">
+    </form>
+    <a href="{% url 'lista-atendentes' %}">Cancelar</a>
+</body>
+
+</html>
