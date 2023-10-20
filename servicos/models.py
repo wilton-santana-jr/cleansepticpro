@@ -13,12 +13,9 @@ from datetime import timedelta
 # Create your models here.
 
 class TiposServicos(models.Model):
-    tipo_choices = (
-        ('P', 'Limpeza Profunda'),
-        ('S', 'Limpeza Simples')
-    )
+
     nome = models.CharField(max_length=50)
-    tipo = models.CharField(max_length=2, choices=tipo_choices)
+
     preco = models.FloatField()
     disponivel = models.BooleanField(default=True)
 

@@ -20,14 +20,14 @@
     {% endif %}
 
     <div class="row">
-        <h4 class="font-destaque">Listagem de Atendentes <br>Gerente Logado: {{ request.user.nome }}</h4>
+        <h4 class="font-destaque">Listagem de Serviços de Limpeza <br>Gerente Logado: {{ request.user.nome }}</h4>
 
         <div class="my-4">
-            <a href="{% url 'cadastra-atendente' %}" class="btn-default-link">Novo Atendente</a>
+            <a href="{% url 'cadastra-servico' %}" class="btn-default-link">Novo Serviço</a>
         </div>
-        {% if not atendentes %}
+        {% if not servicos %}
         <br>
-        <h4 class="font-destaque">Nenhum Atendente Cadastrado</h4>
+        <h4 class="font-destaque">Nenhum Serviço de Limpeza Cadastrado</h4>
         <br>
         {% else %}
         <table class="table">
@@ -37,23 +37,21 @@
 
 
 
-                    <th scope="col">Atendente</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Fone</th>
-                    <th scope="col">Endereço</th>
+                    <th scope="col">Nome do Tipo de Limpeza</th>
+
+                    <th scope="col">Preço</th>
                     <th scope="col">Status</th>
 
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                {% for atendente in atendentes %}
+                {% for servico in servicos %}
                 <tr class="table-hover table-dark custom-table">
-                    <td>{{ atendente.nome }}</td>
-                    <td>{{ atendente.email }}</td>
-                    <td>{{ atendente.telefone }}</td>
-                    <td>{{ atendente.endereco }}</td>
-                    <td>{% if atendente.is_active %}
+                    <td>{{ servico.nome }}</td>
+
+                    <td>{{ servico.preco }}</td>
+                    <td>{% if servico.disponivel %}
                         <span class='badge bg-info text-white'>Ativado</span>
                         {% else %}
                         <span class='badge bg-danger text-white'>Desativado</span>
@@ -69,21 +67,19 @@
                     <!-- Seção de detalhes oculta -->
                     <td colspan="6">
 
-                        <h1 class="font-destaque-secundaria">Detalhes do Atendente</h1>
+                        <h1 class="font-destaque-secundaria">Detalhes do Serviço de Limpeza</h1>
 
-                        <p>Login: {{ atendente.username }}</p>
-                        <p>Nome: {{ atendente.nome }}</p>
-                        <p>Telefone: {{ atendente.telefone }}</p>
-                        <p>Endereço: {{ atendente.endereco }}</p>
-                        <a href="{% url 'edita-atendente' atendente.id %}" class="btn-default-link2">Editar</a>
-                        {% if atendente.is_active %}
-                        <a href="{% url 'inativa-atendente' atendente.id %}" class="btn-default-link2">Inativar</a>
+                        <p>Nome: {{ servico.nome }}</p>
+                        <p>Preço: R$ {{ servico.preco }}</p>
+                        <a href="{% url 'edita-servico' servico.id %}" class="btn-default-link2">Editar</a>
+                        {% if servico.disponivel %}
+                        <a href="{% url 'inativa-servico' servico.id %}" class="btn-default-link2">Inativar</a>
                         {% else %}
-                        <a href="{% url 'ativa-atendente' atendente.id %}" class="btn-default-link2">Ativar</a>
+                        <a href="{% url 'ativa-servico' servico.id %}" class="btn-default-link2">Ativar</a>
                         {% endif %}
 
-                        <a href="{% url 'lista-atendentes' %}" class="btn-default-link2">Voltar para a lista de
-                            atendentes</a>
+                        <a href="{% url 'lista-servicos' %}" class="btn-default-link2">Voltar para a lista de
+                            serviços de limpeza</a>
 
                     </td>
 

@@ -19,26 +19,8 @@
     {% endfor %}
     {% endif %}
 
-    <div class="row">
-        <h3 class="font-destaque">
-            Menu Principal Perfil Gerencial
-            <br> Gerente Logado: {{ request.user.nome }}
-        </h3>
-
-        <br>
-
-        <div class="my-4">
-            <a href="{% url 'lista-atendentes' %} " class="btn-default-link">Gerência de Atendentes</a>
-        </div>
-
-        <div class="my-4">
-            <a href="{% url 'lista-servicos' %} " class="btn-default-link">Gerência de Serviços de Limpeza</a>
-        </div>
-
-
-
-
-
+    <div>
+        <h4>Listagem de Atendimentos às Solicitações dos Clientes. Atendente Logado: {{ request.user.nome }}</h4>
     </div>
 </div>
 {% endblock %}

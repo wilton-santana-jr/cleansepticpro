@@ -1,19 +1,54 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+{% extends "bases/base.html" %}
+{% load static %}
+{% block 'head' %}
+<link href="{% static 'acessos/css/css.css' %}" rel="stylesheet">
+{% endblock 'head' %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Atendente</title>
-</head>
+{% block 'conteudo' %}
+<br>
+<br>
+<div class="container">
 
-<body>
-    <h1>Editar Atendente</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Salvar Alterações">
-    </form>
-    <a href="{% url 'lista-atendentes' %}">Voltar para a lista de atendentes</a>
-</body>
+    {% if messages %}
+    <br>
+    {% for message in messages %}
+    <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
 
-</html>
+
+    <div class="row">
+        <div class="col-md-3" style="text-align: center">
+            <h6 class="font-destaque-secundaria">CleanSepticPro</h6>
+            <img src="{% static 'geral/img/logo1.png' %}" width="250" height="250" alt="">
+
+        </div>
+        <div class="col-md-7" style="text-align: left">
+            <h3 class="font-destaque">Editar Atendente</h3><br>
+            <form method="POST">
+
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <br>
+                <div class="row">
+                    <div class="col-md-5">
+                        <input type="submit" class="btn btn-primary text-center" value="Salvar Alterações">
+                    </div>
+
+                    <br><br><br><br>
+
+                    <div class="col-md-5">
+                        <a href="{% url 'lista-atendentes' %}" class="btn btn-danger text-center">Voltar para a lista de
+                            atendentes</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <br>
+    <br>
+
+
+    {% endblock %}

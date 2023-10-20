@@ -1,19 +1,70 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+{% extends "bases/base.html" %}
+{% load static %}
+{% block 'head' %}
+<link href="{% static 'acessos/css/css.css' %}" rel="stylesheet">
+{% endblock 'head' %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Inativar Atendente</title>
-</head>
+{% block 'conteudo' %}
+<br>
+<br>
+<div class="container">
 
-<body>
-    <h1>Inativar Atendente</h1>
-    <p>Tem certeza de que deseja inativar o atendente "{{ atendente.nome }}"?</p>
+    {% if messages %}
+    <br>
+    {% for message in messages %}
+    <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+
+
+    <div class="row">
+        <div class="col-md-2 text-center">
+            <img src="{% static 'geral/img/logo1.png' %}" width="100%" height="100%" alt="">
+
+        </div>
+
+        <div class="col-md-10">
+            <h6 class="font-destaque-secundaria">CleanSepticPro</h6>
+            <h3 class="font-destaque">Ativar Atendente</h3>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+
+
+            <p class="font-destaque-secundaria">
+                Tem certeza de que deseja ativar o atendente: "<b>{{atendente.nome}}</b>"?
+            </p>
+
+        </div>
+    </div>
+    <br>
+
+
+
     <form method="post">
         {% csrf_token %}
-        <input type="submit" value="Confirmar Inativação do atendente">
+        <div class="row">
+            <div class="col-md-5 " style="text-align: right;">
+                <input type="submit" value="Confirmar" class="btn btn-primary">
+            </div>
+            <br>
+            <div class="col-md-5 " style="text-align: left;">
+                <a href="{% url 'lista-atendentes' %}" class="btn btn-danger">Cancelar</a>
+            </div>
+        </div>
     </form>
-    <a href="{% url 'lista-atendentes' %}">Cancelar</a>
-</body>
 
-</html>
+
+
+
+</div>
+{% endblock %}

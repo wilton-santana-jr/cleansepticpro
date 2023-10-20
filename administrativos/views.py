@@ -15,7 +15,7 @@ from .decorators import gerente_required, atendente_required
 
 from servicos.models import SolicitacaoServico, TiposServicos
 # Create your views here.
-from .forms import AtendenteForm
+from .forms import AtendenteForm, ServicoForm
 
 
 @login_required
@@ -32,13 +32,14 @@ def atendimentos(request):
         return render(request, 'atendimentos.html')
 
 
+##################################################################
+# GERÊNCIA DE ATENDENTES PELO GERENTE
+##################################################################
+
 @login_required
 @gerente_required
 def lista_atendentes(request):
-    # pega o grupo de atendentes
-    # group = Group.objects.get(name='atendentes')
     # Obtenha todos os usuários que pertencem ao grupo 'atendentes' e ordene-os por nome
-    # atendentes = User.objects.filter(groups=group).order_by('username')
     atendentes = CustomUser.objects.filter(
         groups__name='atendentes').order_by('nome')
     return render(request, 'lista_atendentes.html', {'atendentes': atendentes})
@@ -114,3 +115,79 @@ def ativa_atendente(request, atendente_id):
         atendente.save()
         return redirect('lista-atendentes')
     return render(request, 'ativa_atendente.html', {'atendente': atendente})
+
+
+##################################################################
+# GERÊNCIA DE SERVIÇOS DE LIMPEZA PELO GERENTE
+##################################################################
+
+
+@login_required
+@gerente_required
+def lista_servicos(request):
+    # Obtenha todos os usuários que pertencem ao grupo 'atendentes' e ordene-os por nome
+    servicos = TiposServicos.objects.all()
+    return render(request, 'lista_servicos.html', {'servicos': servicos})
+
+
+@login_required
+@gerente_required
+def detalhe_servico(request, servico_id):
+    servico = get_object_or_404(TiposServicos, pk=servico_id)
+    return render(request, 'detalhe_servico.html', {'servico': servico})
+
+
+@login_required
+@gerente_required
+def cadastra_servico(request):
+    if request.method == 'POST':
+        form = ServicoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista-servicos')
+    else:
+        form = ServicoForm()
+    return render(request, 'cadastra_servico.html', {'form': form})
+
+
+@login_required
+@gerente_required
+def edita_servico(request, servico_id):
+    servico = get_object_or_404(TiposServicos, pk=servico_id)
+    if request.method == 'POST':
+        form = ServicoForm(request.POST, instance=servico)
+        if form.is_valid():
+            form.save()
+            return redirect('lista-servicos')
+    else:
+        form = ServicoForm(instance=servico)
+    return render(request, 'edita_servico.html', {'form': form})
+
+
+@login_required
+@gerente_required
+def inativa_servico(request, servico_id):
+    servico = get_object_or_404(TiposServicos, pk=servico_id)
+    if request.method == 'POST':
+        servico.disponivel = False
+        servico.save()
+        return redirect('lista-servicos')
+    return render(request, 'inativa_servico.html', {'servico': servico})
+
+
+@login_required
+@gerente_required
+def ativa_servico(request, servico_id):
+    servico = get_object_or_404(TiposServicos, pk=servico_id)
+
+    if request.method == 'POST':
+        servico.disponivel = True
+        servico.save()
+        return redirect('lista-servicos')
+    return render(request, 'ativa_servico.html', {'servico': servico})
+
+
+##################################################################
+# GERÊNCIA DE SOLICITAÇÕES DE SERVIÇOS DE LIMPEZA SOLICITADOS PELOS CLIENTES.
+# QUEM GERENCIA ESSAS SOLICITAÇÕES SÃO OS ATENDENTES
+##################################################################
