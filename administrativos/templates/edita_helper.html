@@ -25,7 +25,7 @@
 
         </div>
         <div class="col-md-7" style="text-align: left">
-            <h3 class="font-destaque">Cadastrar Funcionário</h3><br>
+            <h3 class="font-destaque">Editar Helper</h3><br>
             <form method="POST">
 
                 {% csrf_token %}
@@ -34,13 +34,14 @@
                 <br>
                 <div class="row">
                     <div class="col-md-5">
-                        <input type="submit" class="btn btn-primary text-center" value="Cadastrar">
+                        <input type="submit" class="btn btn-primary text-center" value="Salvar Alterações">
                     </div>
 
                     <br><br><br><br>
 
                     <div class="col-md-5">
-                        <a href="{% url 'lista-atendentes' %}" class="btn btn-danger text-center">Voltar</a>
+                        <a href="{% url 'lista-helpers' %}" class="btn btn-danger text-center">Voltar para a lista de
+                            helpers</a>
                     </div>
                 </div>
 

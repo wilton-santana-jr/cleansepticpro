@@ -2,6 +2,7 @@
 {% load static %}
 {% block 'head' %}
 <link href="{% static 'acessos/css/css.css' %}" rel="stylesheet">
+<link href="{% static 'administrativos/css/css.css' %}" rel="stylesheet">
 {% endblock 'head' %}
 
 {% block 'conteudo' %}
@@ -43,6 +44,14 @@
                             atendentes</a>
                     </div>
                 </div>
+
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        // Selecione todos os elementos <option> dentro de formulários
+                        $('option').addClass('opt2');
+                    });
+                </script>
 
             </form>
         </div>

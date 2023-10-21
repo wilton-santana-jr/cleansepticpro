@@ -5,11 +5,21 @@ from servicos.models import TiposServicos
 from django import forms
 
 
-class AtendenteForm(forms.ModelForm):
+class FuncionarioForm(forms.ModelForm):
+    TIPO_FUNCIONARIO_CHOICES = [
+        ('Atendente', 'Atendente'),
+        ('Helper', 'Helper'),
+    ]
+
+    tipo_funcionario = forms.ChoiceField(
+        choices=TIPO_FUNCIONARIO_CHOICES,
+        label='Tipo Funcionário'
+    )
+
     class Meta:
         model = CustomUser
         fields = ['email', 'username', 'password',
-                  'nome', 'telefone', 'endereco']
+                  'nome', 'telefone', 'endereco', 'tipo_funcionario']
         labels = {
             'username': 'Login',
             'password': 'Senha',
@@ -29,19 +39,26 @@ class AtendenteForm(forms.ModelForm):
 
         for field_name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input-default w100'})
+        
 
     def save(self, commit=True):
         # Chame o método save do modelo para criar o usuário
-        instance = super(AtendenteForm, self).save(commit=False)
+        instance = super(FuncionarioForm, self).save(commit=False)
 
         if commit:
             # Primeiro, salve o objeto para obter um ID
             instance.save()
 
-        # Certifique-se de que o usuário seja adicionado ao grupo "atendentes"
-        atendentes_group, created = Group.objects.get_or_create(
-            name='atendentes')
-        instance.groups.add(atendentes_group)
+        if self.cleaned_data.get('tipo_funcionario') == 'Atendente':
+            # Certifique-se de que o usuário seja adicionado ao grupo "atendentes"
+            atendentes_group, created = Group.objects.get_or_create(
+                name='atendentes')
+            instance.groups.add(atendentes_group)
+        if self.cleaned_data.get('tipo_funcionario') == 'Helper':
+            helper_group, created = Group.objects.get_or_create(
+                name='helpers')
+            instance.groups.add(helper_group)
+
 
         if commit:
             instance.save()
@@ -57,7 +74,7 @@ class AtendenteForm(forms.ModelForm):
 
     def clean(self):
         # Certifique-se de que a senha seja atualizada apenas se um novo valor de senha for fornecido
-        cleaned_data = super(AtendenteForm, self).clean()
+        cleaned_data = super(FuncionarioForm, self).clean()
         if not cleaned_data.get('password'):
             self.instance.set_unusable_password()
         return cleaned_data

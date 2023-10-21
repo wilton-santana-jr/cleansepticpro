@@ -1,0 +1,129 @@
+{% extends "bases/base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<link href="{% static 'administrativos/css/css.css' %}" rel="stylesheet">
+{% endblock 'head' %}
+
+{% block 'conteudo' %}
+<div class="container">
+  <br>
+  <h3 class="font-destaque-secundaria"> <img width="10%" src="{% static 'geral/img/logo1.png' %}" alt="">
+    CleanSepticPro
+  </h3>
+
+  {% if messages %}
+  <br>
+  {% for message in messages %}
+  <div class="alert {{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+  {% endif %}
+
+  <div class="row">
+    <h4 class="font-destaque">Listagem de Atendentes <br>Gerente Logado: {{ request.user.nome }}</h4>
+
+    <div class="my-4">
+      <a href="{% url 'cadastra-funcionario' %}" class="btn-default-link">Novo funcionário</a>
+    </div>
+    {% if not helpers %}
+    <br>
+    <h4 class="font-destaque">Nenhum Helper Cadastrado</h4>
+    <br>
+    {% else %}
+    <table class="table">
+      <thead>
+        <tr class="table table-hover table-dark custom-table">
+
+          <th scope="col">Helper</th>
+          <th scope="col">Email</th>
+          <th scope="col">Fone</th>
+          <th scope="col">Endereço</th>
+          <th scope="col">Status</th>
+
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for helper in helpers %}
+        <tr class="table-hover table-dark custom-table">
+          <td>{{ helper.nome }}</td>
+          <td>{{ helper.email }}</td>
+          <td>{{ helper.telefone }}</td>
+          <td>{{ helper.endereco }}</td>
+          <td>{% if helper.is_active %}
+            <span class='badge bg-info text-white'>Ativado</span>
+            {% else %}
+            <span class='badge bg-danger text-white'>Desativado</span>
+            {% endif %}
+          </td>
+          <td align="center">
+            <!-- Botão "Ver Detalhes" -->
+            <button class="btn-default-link2  ver-detalhes">Ver Detalhes</button>
+          </td>
+        </tr>
+        <tr class="detalhes table-hover table-dark custom-table">
+
+          <!-- Seção de detalhes oculta -->
+          <td colspan="6">
+
+            <h1 class="font-destaque-secundaria">Detalhes do Helper</h1>
+
+            <p>Login: {{ helper.username }}</p>
+            <p>Nome: {{ helper.nome }}</p>
+            <p>Telefone: {{ helper.telefone }}</p>
+            <p>Endereço: {{ helper.endereco }}</p>
+            <a href="{% url 'edita-helper' helper.id %}" class="btn-default-link2">Editar</a>
+            {% if helper.is_active %}
+            <a href="{% url 'inativa-helper' helper.id %}" class="btn-default-link2">Inativar</a>
+            {% else %}
+            <a href="{% url 'ativa-helper' helper.id %}" class="btn-default-link2">Ativar</a>
+            {% endif %}
+
+            <a href="{% url 'lista-helpers' %}" class="btn-default-link2">Voltar para a lista de
+              helpers</a>
+
+          </td>
+
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="row">
+      <div class="col-md-5">
+        <a href="{% url 'relatorios' %}" class="btn btn-danger text-center">Voltar para relatórios</a>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+
+        $(".ver-detalhes").click(function () {
+          // Encontre a linha de detalhes associada ao botão clicado
+          var detalhes = $(this).closest("tr").next(".detalhes");
+
+          // Alterne a visibilidade dos detalhes
+          detalhes.toggle();
+          // Altere o texto do botão para alternar entre "Ver Detalhes" e "Ocultar Detalhes"
+          if (detalhes.is(":visible")) {
+            $(this).text(" Ocultar ");
+          } else {
+            $(this).text(" Ver Detalhes ");
+          }
+
+        });
+
+        $(".ver-detalhes").click();
+
+      });
+    </script>
+
+
+
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

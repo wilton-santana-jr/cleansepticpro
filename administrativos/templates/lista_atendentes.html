@@ -23,7 +23,7 @@
         <h4 class="font-destaque">Listagem de Atendentes <br>Gerente Logado: {{ request.user.nome }}</h4>
 
         <div class="my-4">
-            <a href="{% url 'cadastra-atendente' %}" class="btn-default-link">Novo Atendente</a>
+            <a href="{% url 'cadastra-funcionario' %}" class="btn-default-link">Novo funcionário</a>
         </div>
         {% if not atendentes %}
         <br>
@@ -92,6 +92,12 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <div class="row">
+            <div class="col-md-5">
+                <a href="{% url 'relatorios' %}" class="btn btn-danger text-center">Voltar para relatórios</a>
+            </div>
+        </div>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
